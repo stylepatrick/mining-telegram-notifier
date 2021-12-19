@@ -1,0 +1,8 @@
+notifier:
+  poolApi: ${PoolApi}
+  hashrateGap: ${HashrateGap}
+  pollingInterval: ${PollingInterval}
+  miningAddress: ${MiningAddress}
+  telegramApi: ${TelegramApi}
+  telegramToken: ${TelegramToken}
+  telegramChatId: ${TelegramChatId}
