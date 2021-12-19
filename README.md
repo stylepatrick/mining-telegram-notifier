@@ -11,3 +11,6 @@
 - TelegramToken -> Telegram BOT Token. 
 - TelegramChatId -> Your Chat ID where the BOT sents messages.
 
+## DockerHub
+https://hub.docker.com/repository/docker/stylepatrick/mining-telegram-notifier
+
