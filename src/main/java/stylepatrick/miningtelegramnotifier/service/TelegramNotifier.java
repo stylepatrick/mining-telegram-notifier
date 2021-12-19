@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -37,11 +39,9 @@ public class TelegramNotifier {
         }
         if (previousStats.getStatus() != null && !previousStats.getStatus().equals("ERROR")) {
             Long difference =  previousStats.getData().getReportedHashrate() - (previousStats.getData().getReportedHashrate() / 100) * appConfig.getHashrateGap();
-            if (currentStats.getData().getReportedHashrate() < difference) {
-                sendTelegramNotification(currentStats, "Hashrate decreasing!");
-            } else if (difference == 0 && currentStats.getData().getReportedHashrate() != 0) {
-                sendTelegramNotification(currentStats, "Offline!");
-            }
+            //if (currentStats.getData().getReportedHashrate() < difference) {
+                sendTelegramNotification(currentStats, "Check your Rig!");
+            //}
         }
     }
 
@@ -55,11 +55,12 @@ public class TelegramNotifier {
     private void sendTelegramNotification(CurrentStats currentStats, String title) {
         Date date = new Date();
         date.setTime(currentStats.getData().getLastSeen() * 1000);
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss aa");
         String urlString = appConfig.getTelegramApi() + "/bot%s/sendMessage?chat_id=%s&text=%s&parse_mode=HTML";
         String text = "<b>" + title + "</b> \n" +
-                "<b>Last Seen: </b>" + date.getTime() + "\n" +
-                "<b>Active Workers: </b>" + currentStats.getData().getActiveWorkers() + "\n" +
-                "<b>Reported Hashrate: </b>" + currentStats.getData().getReportedHashrate();
+                "<b>Reported Hashrate: </b>" + currentStats.getData().getReportedHashrate() + "\n" +
+                "<b>Last Seen: </b>" + dateFormat.format(date) + "\n" +
+                "<b>Active Workers: </b>" + currentStats.getData().getActiveWorkers();
         urlString = String.format(urlString, appConfig.getTelegramToken(), appConfig.getTelegramChatId(), URLEncoder.encode(text));
 
         try {
