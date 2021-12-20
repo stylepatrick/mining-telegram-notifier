@@ -38,10 +38,10 @@ public class TelegramNotifier {
             currentStats = requestStatsOnMiningApi();
         }
         if (previousStats.getStatus() != null && !previousStats.getStatus().equals("ERROR")) {
-            Long difference =  previousStats.getData().getReportedHashrate() - (previousStats.getData().getReportedHashrate() / 100) * appConfig.getHashrateGap();
-            //if (currentStats.getData().getReportedHashrate() < difference) {
+            Long difference = previousStats.getData().getReportedHashrate() - (previousStats.getData().getReportedHashrate() / 100) * appConfig.getHashrateGap();
+            if (currentStats.getData().getReportedHashrate() < difference) {
                 sendTelegramNotification(currentStats, "Check your Rig!");
-            //}
+            }
         }
     }
 
@@ -58,7 +58,7 @@ public class TelegramNotifier {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss aa");
         String urlString = appConfig.getTelegramApi() + "/bot%s/sendMessage?chat_id=%s&text=%s&parse_mode=HTML";
         String text = "<b>" + title + "</b> \n" +
-                "<b>Reported Hashrate: </b>" + currentStats.getData().getReportedHashrate() + "\n" +
+                "<b>Reported Hashrate: </b>" + currentStats.getData().getReportedHashrate() / 1000000 + " MH/s\n" +
                 "<b>Last Seen: </b>" + dateFormat.format(date) + "\n" +
                 "<b>Active Workers: </b>" + currentStats.getData().getActiveWorkers();
         urlString = String.format(urlString, appConfig.getTelegramToken(), appConfig.getTelegramChatId(), URLEncoder.encode(text));
