@@ -38,9 +38,12 @@ public class TelegramNotifier {
             currentStats = requestStatsOnMiningApi();
         }
         if (previousStats.getStatus() != null && !previousStats.getStatus().equals("ERROR")) {
-            Long difference = previousStats.getData().getReportedHashrate() - (previousStats.getData().getReportedHashrate() / 100) * appConfig.getHashrateGap();
-            if (currentStats.getData().getReportedHashrate() < difference) {
-                sendTelegramNotification(currentStats, "Check your Rig!");
+            Long decreaseDifference = previousStats.getData().getReportedHashrate() - (previousStats.getData().getReportedHashrate() / 100) * appConfig.getHashrateGap();
+            Long increaseDifference = previousStats.getData().getReportedHashrate() + (previousStats.getData().getReportedHashrate() / 100) * appConfig.getHashrateGap();
+            if (currentStats.getData().getReportedHashrate() < decreaseDifference) {
+                sendTelegramNotification(currentStats, "Hashrate low!");
+            } else if (currentStats.getData().getReportedHashrate() > increaseDifference) {
+                sendTelegramNotification(currentStats, "Hashrate high!");
             }
         }
     }

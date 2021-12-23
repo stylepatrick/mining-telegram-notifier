@@ -1,6 +1,6 @@
 # mining-telegram-notifier
  Telegram notifier for your mining rig. Can be used for mining Pools like etherminer.org.
- Will send notification over a Telegram BOT if Hashrate decrease or if rig goes offline.
+ Will send notification over a Telegram BOT if Hashrate decrease/increase or if rig goes offline.
 
 ## Setup
 - PoolApi -> Pool API URL (ex. https://api.ethermine.org)

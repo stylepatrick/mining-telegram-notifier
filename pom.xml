@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>stylepatrick</groupId>
 	<artifactId>mining-telegram-notifier</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<name>mining-telegram-notifier</name>
 	<description>Telegram notifier for your mining rig.</description>
 	<properties>
